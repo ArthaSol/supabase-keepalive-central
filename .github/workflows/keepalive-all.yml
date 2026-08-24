@@ -1,0 +1,22 @@
+name: Centralized Supabase Keep Alive
+
+on:
+  schedule:
+    - cron: '0 0 */3 * *' # Runs automatically every 3 days
+  workflow_dispatch:      # Allows manual trigger of all pings
+
+jobs:
+  ping-all:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Timestamp
+        id: time
+        run: echo "timestamp=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+
+      - name: Heartbeat - Project pwgeppfxgxdpgzfoulfn
+        run: |
+          KEY=$(echo "${{ secrets.PWGEPPFXGXDPGZFOULFN_SERVICE_ROLE }}" | tr -d '\r\n ')
+          curl -f -s -X PATCH \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" \
+            -d "{\"last_ping\": \"${{ steps.time.outputs.timestamp }}\"}" \
+            "https://pwgeppfxgxdpgzfoulfn.supabase.co/rest/v1/heartbeat?id=eq.1"
