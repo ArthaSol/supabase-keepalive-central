@@ -80,3 +80,20 @@ jobs:
           else
             echo "::warning::DYDRIOLDIIBDHZKLISCZ_SERVICE_ROLE secret not set!"
           fi
+
+      - name: Heartbeat - Project uxcanmlpenlwvedboyga
+        run: |
+          KEY=$(echo "${{ secrets.UXCANMLPENLWVEDBOYGA_SERVICE_ROLE }}" | tr -d '\r\n ')
+          if [ -n "$KEY" ]; then
+            curl -f -i \
+              --retry 5 \
+              --retry-delay 5 \
+              --retry-connrefused \
+              --connect-timeout 10 \
+              -X PATCH \
+              -H "apikey: $KEY" -H "Authorization: Bearer $KEY" -H "Content-Type: application/json" \
+              -d "{\"last_ping\": \"${{ steps.time.outputs.timestamp }}\"}" \
+              "https://uxcanmlpenlwvedboyga.supabase.co/rest/v1/heartbeat?id=eq.1"
+          else
+            echo "::warning::UXCANMLPENLWVEDBOYGA_SERVICE_ROLE secret not set!"
+          fi
