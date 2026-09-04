@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central Supabase Keep-Alive Dashboard</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom Design System Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Top Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <h1 class="brand-title">Supabase Keep-Alive Central</h1>
+          <p class="brand-subtitle">Automated Database Health & Write Heartbeat Monitor</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="refreshBtn" class="btn btn-secondary">🔄 Sync Status</button>
+        <a href="https://github.com/ArthaSol/supabase-keepalive-central/actions/workflows/keepalive-all.yml" target="_blank" class="btn btn-primary">🚀 Trigger Keep-Alive</a>
+      </div>
+    </header>
+
+    <!-- System Status Banner -->
+    <section class="status-banner">
+      <div class="status-indicator-group">
+        <div class="pulse-dot"></div>
+        <div>
+          <div class="status-title">All Systems Operational</div>
+          <div class="status-sub">6 Free-Tier Supabase Databases Active & Protected</div>
+        </div>
+      </div>
+
+      <div class="stats-counter">
+        <div class="stat-item">
+          <span class="stat-val">6 / 6</span>
+          <span class="stat-lbl">Active DBs</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val">2x Daily</span>
+          <span class="stat-lbl">Ping Schedule</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-val" id="nextRunCountdown">--h --m --s</span>
+          <span class="stat-lbl">Next Auto Run</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Account Email Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="filter-btn active" data-filter="all">All Accounts (6)</button>
+      <button class="filter-btn" data-filter="bhargav.madhun1@gmail.com">bhargav.madhun1@gmail.com (4)</button>
+      <button class="filter-btn" data-filter="mbhargava.c@gmail.com">mbhargava.c@gmail.com (2)</button>
+    </div>
+
+    <!-- Projects Grid Container -->
+    <main class="projects-grid" id="projectsGrid">
+      <!-- Injected via app.js -->
+    </main>
+
+    <!-- GitHub Actions Workflow Runs Activity Stream -->
+    <section class="workflow-section">
+      <div class="section-title">
+        <span>⚡ Recent GitHub Actions Execution Stream</span>
+        <a href="https://github.com/ArthaSol/supabase-keepalive-central/actions" target="_blank" class="btn btn-secondary" style="font-size:0.75rem; padding:0.35rem 0.75rem;">View All Runs ↗</a>
+      </div>
+      <div class="runs-list" id="runsList">
+        <div class="run-item">
+          <span class="run-title-text" style="color:var(--text-muted)">Loading GitHub Actions execution history...</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Centralized Database Protection System • Powered by GitHub Actions & REST Heartbeat API</p>
+      <p style="margin-top:0.35rem;"><a href="https://github.com/ArthaSol/supabase-keepalive-central" target="_blank">ArthaSol/supabase-keepalive-central Repository</a></p>
+    </footer>
+
+  </div>
+
+  <!-- Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>

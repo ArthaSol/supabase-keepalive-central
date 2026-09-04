@@ -2,6 +2,8 @@
 
 This repository handles automated write heartbeats to prevent multiple Supabase Free Tier databases from automatically pausing.
 
+🌐 **Live Status Dashboard**: [https://arthasol.github.io/supabase-keepalive-central/](https://arthasol.github.io/supabase-keepalive-central/)
+
 ---
 
 ## 📊 Tracked Supabase Projects Inventory (Sorted by Email)
@@ -14,6 +16,16 @@ This repository handles automated write heartbeats to prevent multiple Supabase 
 | **4** | `bhargav.madhun1@gmail.com` | **Durga** | `uxcanmlpenlwvedboyga` | **Shared** *(Owner: `bhargava.madhunapantula@gmail.com`)* | `UXCANMLPENLWVEDBOYGA_SERVICE_ROLE` | 🟢 Active |
 | **5** | `mbhargava.c@gmail.com` | **SriVenkateswara** | `pwgeppfxgxdpgzfoulfn` | **Self Owned** *(Central Host DB)* | `PWGEPPFXGXDPGZFOULFN_SERVICE_ROLE` | 🟢 Active |
 | **6** | `mbhargava.c@gmail.com` | **SriAnjaneyam** | `yzmmxjaozqziqoyrehjr` | **Self Owned** | `YZMMXJAOZQZIQOYREHJR_SERVICE_ROLE` | 🟢 Active |
+
+---
+
+## 🖥️ Live Keep-Alive Dashboard
+
+The web dashboard is hosted directly on GitHub Pages:
+* Real-time `last_ping` status & IST timestamp formatting.
+* Filter projects by Supabase Account Email.
+* Live GitHub Actions workflow execution stream & error tracking.
+* Countdown timer to the next scheduled run.
 
 ---
 
@@ -38,8 +50,9 @@ Copy the `service_role / secret` key from your Supabase Dashboard (*Project Sett
 ### 3. Add GitHub Repository Secret
 Go to this repository's **Settings ➔ Secrets and variables ➔ Actions** on GitHub, and add a secret matching your project ref (e.g. `<PROJECT_REF>_SERVICE_ROLE`).
 
-### 4. Update Workflow
-Add the corresponding ping step in `.github/workflows/keepalive-all.yml`.
+### 4. Update Workflow & Dashboard
+1. Add the corresponding ping step in `.github/workflows/keepalive-all.yml`.
+2. Add the project entry in `app.js`.
 
 ---
 
