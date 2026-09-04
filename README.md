@@ -4,16 +4,16 @@ This repository handles automated write heartbeats to prevent multiple Supabase 
 
 ---
 
-## 📊 Tracked Supabase Projects Inventory
+## 📊 Tracked Supabase Projects Inventory (Sorted by Email)
 
-| # | App / Project Name | Supabase Subdomain / Ref | Account Login Email | Ownership & Access | GitHub Secret Name | Status |
-|---|-------------------|--------------------------|----------------------|-------------------|--------------------|--------|
-| **1** | **SriVenkateswara** | `pwgeppfxgxdpgzfoulfn` | `mbhargava.c@gmail.com` | **Self Owned** | `PWGEPPFXGXDPGZFOULFN_SERVICE_ROLE` | 🟢 Active |
-| **2** | **Srini_New** *(Srinivasam)* | `audmwkalkloomrltijop` | `bhargav.madhun1@gmail.com` | **Self Owned** | `AUDMWKALKLOOMRLTIJOP_SERVICE_ROLE` | 🟢 Active |
-| **3** | **Sangam** *(BSA)* | `lbegyddwuysusivvjvxy` | `bhargav.madhun1@gmail.com` | **Self Owned** | `LBEGYDDWUYSUSIVVJVXY_SERVICE_ROLE` | 🟢 Active |
-| **4** | **Anjaneyam App** | `dydrioldiibdhzkliscz` | `bhargav.madhun1@gmail.com` | **Shared** *(Owner: `bhargava.madhunapantula@gmail.com`)* | `DYDRIOLDIIBDHZKLISCZ_SERVICE_ROLE` | 🟢 Active |
-| **5** | **Durga** | `uxcanmlpenlwvedboyga` | `bhargav.madhun1@gmail.com` | **Shared** *(Owner: `bhargava.madhunapantula@gmail.com`)* | `UXCANMLPENLWVEDBOYGA_SERVICE_ROLE` | 🟢 Active |
-| **6** | **SriAnjaneyam** | `yzmmxjaozqziqoyrehjr` | `mbhargava.c@gmail.com` | **Self Owned** | `YZMMXJAOZQZIQOYREHJR_SERVICE_ROLE` | 🟢 Active |
+| # | Supabase Account Email | App / Project Name | Supabase Subdomain / Ref | Ownership & Access | GitHub Secret Name | Status |
+|---|------------------------|-------------------|--------------------------|-------------------|--------------------|--------|
+| **1** | `bhargav.madhun1@gmail.com` | **Srini_New** *(Srinivasam)* | `audmwkalkloomrltijop` | **Self Owned** | `AUDMWKALKLOOMRLTIJOP_SERVICE_ROLE` | 🟢 Active |
+| **2** | `bhargav.madhun1@gmail.com` | **Sangam** *(BSA)* | `lbegyddwuysusivvjvxy` | **Self Owned** | `LBEGYDDWUYSUSIVVJVXY_SERVICE_ROLE` | 🟢 Active |
+| **3** | `bhargav.madhun1@gmail.com` | **Anjaneyam App** | `dydrioldiibdhzkliscz` | **Shared** *(Owner: `bhargava.madhunapantula@gmail.com`)* | `DYDRIOLDIIBDHZKLISCZ_SERVICE_ROLE` | 🟢 Active |
+| **4** | `bhargav.madhun1@gmail.com` | **Durga** | `uxcanmlpenlwvedboyga` | **Shared** *(Owner: `bhargava.madhunapantula@gmail.com`)* | `UXCANMLPENLWVEDBOYGA_SERVICE_ROLE` | 🟢 Active |
+| **5** | `mbhargava.c@gmail.com` | **SriVenkateswara** | `pwgeppfxgxdpgzfoulfn` | **Self Owned** *(Central Host DB)* | `PWGEPPFXGXDPGZFOULFN_SERVICE_ROLE` | 🟢 Active |
+| **6** | `mbhargava.c@gmail.com` | **SriAnjaneyam** | `yzmmxjaozqziqoyrehjr` | **Self Owned** | `YZMMXJAOZQZIQOYREHJR_SERVICE_ROLE` | 🟢 Active |
 
 ---
 
