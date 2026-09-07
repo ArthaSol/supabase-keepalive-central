@@ -1,26 +1,32 @@
 /**
  * Supabase Keep-Alive Central Dashboard - Application Script
- * Live Status Tracking, GitHub API Integration, & Countdown Logic
+ * Live Status Tracking, GitHub API Integration, & Package Mapping
  */
 
 const PROJECTS = [
   {
     id: 'pwgeppfxgxdpgzfoulfn',
-    name: 'SriVenkateswara',
+    name: 'SriVenkateswara (Central Host)',
     subdomain: 'pwgeppfxgxdpgzfoulfn',
     account: 'mbhargava.c@gmail.com',
     ownership: 'Self Owned',
-    note: 'Central Host DB',
+    package: 'com.arthasol.srivenkateswara',
+    folder: 'C:\\SriVenkateswara',
+    repo: 'ArthaSol/supabase-keepalive-central',
+    note: 'Central Host DB & Temple App',
     secret: 'PWGEPPFXGXDPGZFOULFN_SERVICE_ROLE',
     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3Z2VwcGZ4Z3hkcGd6Zm91bGZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNzU5NTUsImV4cCI6MjA5NTk1MTk1NX0'
   },
   {
     id: 'audmwkalkloomrltijop',
-    name: 'Srini_New (Srinivasam)',
+    name: 'Srini_New (Srinivasam v2.0)',
     subdomain: 'audmwkalkloomrltijop',
     account: 'bhargav.madhun1@gmail.com',
     ownership: 'Self Owned',
-    note: 'Srinivasam Main App',
+    package: 'com.arthasol.srinivasam',
+    folder: 'd:\\Srinivasam',
+    repo: 'ArthaSol/Srinivasam',
+    note: 'Srinivasam Production App',
     secret: 'AUDMWKALKLOOMRLTIJOP_SERVICE_ROLE',
     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1ZG13a2Fsa2xvb21ybHRpam9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNzU5NTUsImV4cCI6MjA5NTk1MTk1NX0.w7Qz_NDmpg62XBAEwwk2x72R1pgq0gHlqlJGFTZpe3w'
   },
@@ -30,34 +36,46 @@ const PROJECTS = [
     subdomain: 'lbegyddwuysusivvjvxy',
     account: 'bhargav.madhun1@gmail.com',
     ownership: 'Self Owned',
-    note: 'BSA Sangam',
+    package: 'com.community.sangam',
+    folder: 'Downloads\\BSA',
+    repo: 'ArthaSol/supabase-keepalive-central',
+    note: 'Brahman Sangam Association',
     secret: 'LBEGYDDWUYSUSIVVJVXY_SERVICE_ROLE'
   },
   {
     id: 'dydrioldiibdhzkliscz',
-    name: 'Anjaneyam App',
+    name: 'Anjaneyam App (Production)',
     subdomain: 'dydrioldiibdhzkliscz',
     account: 'bhargav.madhun1@gmail.com',
     ownership: 'Shared',
+    package: 'com.anjaneyam.app',
+    folder: 'd:\\Agents',
+    repo: 'ArthaSol/SriAnjaneyam',
     note: 'Owner: bhargava.madhunapantula@gmail.com',
     secret: 'DYDRIOLDIIBDHZKLISCZ_SERVICE_ROLE'
   },
   {
     id: 'uxcanmlpenlwvedboyga',
-    name: 'Durga',
+    name: 'Durga (Devi Navaraatrulu)',
     subdomain: 'uxcanmlpenlwvedboyga',
     account: 'bhargav.madhun1@gmail.com',
     ownership: 'Shared',
+    package: 'com.durgamma.app',
+    folder: 'd:\\DeviNavaraatrulu',
+    repo: 'ArthaSol/Devi',
     note: 'Owner: bhargava.madhunapantula@gmail.com',
     secret: 'UXCANMLPENLWVEDBOYGA_SERVICE_ROLE'
   },
   {
     id: 'yzmmxjaozqziqoyrehjr',
-    name: 'SriAnjaneyam',
+    name: 'SriAnjaneyam (Legacy / Backup)',
     subdomain: 'yzmmxjaozqziqoyrehjr',
     account: 'mbhargava.c@gmail.com',
     ownership: 'Self Owned',
-    note: 'Sri Anjaneyam App 2',
+    package: 'com.mbhargavas.anjaneyam',
+    folder: 'C:\\SriAnjaneyam / d:\\Agents',
+    repo: 'MBhargavas/_Anjaneya_',
+    note: 'Legacy Production / Secondary Backup',
     secret: 'YZMMXJAOZQZIQOYREHJR_SERVICE_ROLE'
   }
 ];
@@ -122,6 +140,11 @@ function renderProjects() {
       </div>
 
       <div class="card-meta">
+        <span>Pkg:</span>
+        <span class="email-pill" style="color:var(--accent-cyan); font-family:monospace;">${project.package}</span>
+      </div>
+
+      <div class="card-meta" style="margin-bottom:0.75rem; padding-bottom:0.5rem;">
         <span>Account:</span>
         <span class="email-pill">${project.account}</span>
       </div>
@@ -136,8 +159,8 @@ function renderProjects() {
           <span class="ping-val" id="status-${project.id}">🟢 Active</span>
         </div>
         <div class="ping-row">
-          <span class="ping-lbl">Context:</span>
-          <span class="ping-val" style="font-size:0.75rem; color:var(--text-secondary);">${project.note}</span>
+          <span class="ping-lbl">Folder:</span>
+          <span class="ping-val" style="font-size:0.75rem; color:var(--text-secondary); font-family:monospace;">${project.folder}</span>
         </div>
       </div>
 
