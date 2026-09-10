@@ -168,12 +168,13 @@ function renderProjects() {
     card.setAttribute('data-id', project.id);
 
     const badgeClass = project.ownership === 'Self Owned' ? 'badge-self' : 'badge-shared';
+    const supabaseDashboardUrl = `https://supabase.com/dashboard/project/${project.subdomain}`;
     
     card.innerHTML = `
       <div class="card-header">
         <div class="card-title-group">
           <div class="card-title">${project.name}</div>
-          <a href="https://${project.subdomain}.supabase.co" target="_blank" class="card-subtitle">${project.subdomain}.supabase.co ↗</a>
+          <a href="${supabaseDashboardUrl}" target="_blank" class="card-subtitle" title="Open Supabase Console for ${project.name}">🔗 Supabase Console (${project.subdomain}) ↗</a>
         </div>
         <span class="badge ${badgeClass}">${project.ownership}</span>
       </div>
