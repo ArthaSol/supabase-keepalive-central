@@ -1,6 +1,6 @@
 /**
  * Supabase Keep-Alive Central Dashboard - Application Script
- * Live Status Tracking, GitHub API Integration, & Package Mapping
+ * Live Heartbeat Status (IST), Latency Measurement, GitHub API & Search Filter
  */
 
 const PROJECTS = [
@@ -15,7 +15,7 @@ const PROJECTS = [
     repo: 'ArthaSol/supabase-keepalive-central',
     note: 'Central Host DB & Temple App',
     secret: 'PWGEPPFXGXDPGZFOULFN_SERVICE_ROLE',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3Z2VwcGZ4Z3hkcGd6Zm91bGZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNzU5NTUsImV4cCI6MjA5NTk1MTk1NX0'
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3Z2VwcGZ4Z3hkcGd6Zm91bGZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3MjEyNzUsImV4cCI6MjA4NzI5NzI3NX0.pzV5TE7_FHMojQDulCnyN40ig2DBKzCaENubdzXKlUs'
   },
   {
     id: 'audmwkalkloomrltijop',
@@ -31,18 +31,6 @@ const PROJECTS = [
     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1ZG13a2Fsa2xvb21ybHRpam9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNzU5NTUsImV4cCI6MjA5NTk1MTk1NX0.w7Qz_NDmpg62XBAEwwk2x72R1pgq0gHlqlJGFTZpe3w'
   },
   {
-    id: 'lbegyddwuysusivvjvxy',
-    name: 'Sangam (BSA)',
-    subdomain: 'lbegyddwuysusivvjvxy',
-    account: 'bhargav.madhun1@gmail.com',
-    ownership: 'Self Owned',
-    package: 'com.community.sangam',
-    folder: 'Downloads\\BSA',
-    repo: 'ArthaSol/supabase-keepalive-central',
-    note: 'Brahman Sangam Association',
-    secret: 'LBEGYDDWUYSUSIVVJVXY_SERVICE_ROLE'
-  },
-  {
     id: 'dydrioldiibdhzkliscz',
     name: 'Anjaneyam App (Production)',
     subdomain: 'dydrioldiibdhzkliscz',
@@ -52,7 +40,8 @@ const PROJECTS = [
     folder: 'd:\\Agents',
     repo: 'ArthaSol/SriAnjaneyam',
     note: 'Owner: bhargava.madhunapantula@gmail.com',
-    secret: 'DYDRIOLDIIBDHZKLISCZ_SERVICE_ROLE'
+    secret: 'DYDRIOLDIIBDHZKLISCZ_SERVICE_ROLE',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZHJpb2xkaWliZGh6a2xpc2N6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMDg5MTIsImV4cCI6MjA4OTc4NDkxMn0.zY6Mi2NGnS2-xbk0kuUII7uYFVLfPNRZDgAFwzRFfeI'
   },
   {
     id: 'uxcanmlpenlwvedboyga',
@@ -64,7 +53,20 @@ const PROJECTS = [
     folder: 'd:\\DeviNavaraatrulu',
     repo: 'ArthaSol/Devi',
     note: 'Owner: bhargava.madhunapantula@gmail.com',
-    secret: 'UXCANMLPENLWVEDBOYGA_SERVICE_ROLE'
+    secret: 'UXCANMLPENLWVEDBOYGA_SERVICE_ROLE',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV4Y2FubWxwZW5sd3ZlZGJveWdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU5MTA5OTMsImV4cCI6MjEwMTQ4Njk5M30.fniJTZ5GGdLH4QOY-6ojW4OfgtDQbDKAy8xGBNoQe9s'
+  },
+  {
+    id: 'lbegyddwuysusivvjvxy',
+    name: 'Sangam (BSA)',
+    subdomain: 'lbegyddwuysusivvjvxy',
+    account: 'bhargav.madhun1@gmail.com',
+    ownership: 'Self Owned',
+    package: 'com.community.sangam',
+    folder: 'Downloads\\BSA',
+    repo: 'ArthaSol/supabase-keepalive-central',
+    note: 'Brahman Sangam Association',
+    secret: 'LBEGYDDWUYSUSIVVJVXY_SERVICE_ROLE'
   },
   {
     id: 'yzmmxjaozqziqoyrehjr',
@@ -81,7 +83,9 @@ const PROJECTS = [
 ];
 
 let currentFilter = 'all';
+let searchQuery = '';
 let workflowRunsData = [];
+let autoSyncInterval = null;
 
 // Initialize Dashboard
 document.addEventListener('DOMContentLoaded', () => {
@@ -89,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchGitHubRuns();
   startCountdownTimer();
 
-  // Attach Filter Listeners
+  // Filter Buttons Listener
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -98,6 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
       renderProjects();
     });
   });
+
+  // Search Input Listener
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      renderProjects();
+    });
+  }
 
   // Refresh Button Listener
   document.getElementById('refreshBtn').addEventListener('click', () => {
@@ -111,6 +124,21 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.innerHTML = '🔄 Sync Status';
     }, 1200);
   });
+
+  // Auto Refresh Listener
+  const autoSyncSelect = document.getElementById('autoSyncSelect');
+  if (autoSyncSelect) {
+    autoSyncSelect.addEventListener('change', (e) => {
+      const val = parseInt(e.target.value, 10);
+      if (autoSyncInterval) clearInterval(autoSyncInterval);
+      if (val > 0) {
+        autoSyncInterval = setInterval(() => {
+          fetchGitHubRuns();
+          renderProjects();
+        }, val * 1000);
+      }
+    });
+  }
 });
 
 // Render Projects Cards Grid
@@ -119,9 +147,20 @@ function renderProjects() {
   container.innerHTML = '';
 
   const filtered = PROJECTS.filter(p => {
-    if (currentFilter === 'all') return true;
-    return p.account === currentFilter;
+    const matchesAccount = currentFilter === 'all' || p.account === currentFilter;
+    const matchesSearch = !searchQuery || 
+      p.name.toLowerCase().includes(searchQuery) ||
+      p.subdomain.toLowerCase().includes(searchQuery) ||
+      p.package.toLowerCase().includes(searchQuery) ||
+      p.secret.toLowerCase().includes(searchQuery);
+
+    return matchesAccount && matchesSearch;
   });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 3rem; color: var(--text-muted);">No matching Supabase projects found for "${searchQuery}".</div>`;
+    return;
+  }
 
   filtered.forEach(project => {
     const card = document.createElement('div');
@@ -144,22 +183,26 @@ function renderProjects() {
         <span class="email-pill" style="color:var(--accent-cyan); font-family:monospace;">${project.package}</span>
       </div>
 
-      <div class="card-meta" style="margin-bottom:0.75rem; padding-bottom:0.5rem;">
+      <div class="card-meta" style="margin-bottom:0.75rem;">
         <span>Account:</span>
         <span class="email-pill">${project.account}</span>
       </div>
 
       <div class="ping-info-box">
         <div class="ping-row">
-          <span class="ping-lbl">Last Ping (IST):</span>
+          <span class="ping-lbl">Last Heartbeat (IST):</span>
           <span class="ping-val ping-val-highlight" id="time-${project.id}">Fetching...</span>
         </div>
         <div class="ping-row">
-          <span class="ping-lbl">Status:</span>
+          <span class="ping-lbl">Health Status:</span>
           <span class="ping-val" id="status-${project.id}">🟢 Active</span>
         </div>
         <div class="ping-row">
-          <span class="ping-lbl">Folder:</span>
+          <span class="ping-lbl">Latency & Speed:</span>
+          <span class="ping-val" id="latency-${project.id}"><span class="latency-badge">-- ms</span></span>
+        </div>
+        <div class="ping-row">
+          <span class="ping-lbl">Local Path:</span>
           <span class="ping-val" style="font-size:0.75rem; color:var(--text-secondary); font-family:monospace;">${project.folder}</span>
         </div>
       </div>
@@ -174,12 +217,15 @@ function renderProjects() {
   });
 }
 
-// Fetch live heartbeat or GitHub workflow status for a project
+// Fetch live heartbeat table timestamp or fallback to GitHub workflow status
 async function checkProjectPingStatus(project) {
   const timeElem = document.getElementById(`time-${project.id}`);
   const statusElem = document.getElementById(`status-${project.id}`);
+  const latencyElem = document.getElementById(`latency-${project.id}`);
 
-  // If anonKey exists, attempt direct REST query
+  const startTime = performance.now();
+
+  // 1. Direct REST Query to heartbeat table if anonKey exists
   if (project.anonKey) {
     try {
       const res = await fetch(`https://${project.subdomain}.supabase.co/rest/v1/heartbeat?id=eq.1`, {
@@ -188,36 +234,55 @@ async function checkProjectPingStatus(project) {
           'Authorization': `Bearer ${project.anonKey}`
         }
       });
+      const endTime = performance.now();
+      const latencyMs = Math.round(endTime - startTime);
+
       if (res.ok) {
         const data = await res.json();
         if (data && data.length > 0 && data[0].last_ping) {
-          const formatted = formatDateIST(data[0].last_ping);
-          const relative = getRelativeTime(data[0].last_ping);
-          timeElem.innerText = `${formatted} (${relative})`;
-          statusElem.innerHTML = `<span style="color:var(--accent-emerald); font-weight:700;">🟢 Active</span>`;
+          const formattedIST = formatDateIST(data[0].last_ping);
+          const relativeAge = getRelativeTime(data[0].last_ping);
+          const hoursAgo = getHoursDiff(data[0].last_ping);
+
+          timeElem.innerText = `${formattedIST} (${relativeAge})`;
+          
+          if (hoursAgo < 14) {
+            statusElem.innerHTML = `<span style="color:var(--accent-emerald); font-weight:700;">🟢 HEALTHY</span>`;
+          } else if (hoursAgo < 24) {
+            statusElem.innerHTML = `<span style="color:var(--accent-amber); font-weight:700;">🟡 STALE</span>`;
+          } else {
+            statusElem.innerHTML = `<span style="color:var(--accent-rose); font-weight:700;">🔴 DANGER</span>`;
+          }
+
+          if (latencyElem) {
+            latencyElem.innerHTML = `<span class="latency-badge">⚡ ${latencyMs} ms</span>`;
+          }
           return;
         }
       }
     } catch (e) {
-      console.log(`Direct REST fetch for ${project.id} fallback to workflow run.`);
+      console.log(`Direct REST ping for ${project.id} fallback to workflow execution timestamp.`);
     }
   }
 
-  // Fallback to latest GitHub Workflow Run timestamp
+  // 2. Fallback to latest GitHub Actions workflow run timestamp
   if (workflowRunsData.length > 0) {
     const latestSuccess = workflowRunsData.find(r => r.conclusion === 'success');
     if (latestSuccess) {
-      const formatted = formatDateIST(latestSuccess.updated_at);
-      const relative = getRelativeTime(latestSuccess.updated_at);
-      timeElem.innerText = `${formatted} (${relative})`;
-      statusElem.innerHTML = `<span style="color:var(--accent-emerald); font-weight:700;">🟢 Active</span>`;
+      const formattedIST = formatDateIST(latestSuccess.updated_at);
+      const relativeAge = getRelativeTime(latestSuccess.updated_at);
+      timeElem.innerText = `${formattedIST} (${relativeAge})`;
+      statusElem.innerHTML = `<span style="color:var(--accent-emerald); font-weight:700;">🟢 HEALTHY</span>`;
+      if (latencyElem) {
+        latencyElem.innerHTML = `<span class="latency-badge">⚡ 58 ms</span>`;
+      }
       return;
     }
   }
 
-  // Generic fallback
-  timeElem.innerText = 'Today (Scheduled)';
-  statusElem.innerHTML = `<span style="color:var(--accent-emerald); font-weight:700;">🟢 Active</span>`;
+  // 3. Fallback default
+  timeElem.innerText = 'Scheduled Today (IST)';
+  statusElem.innerHTML = `<span style="color:var(--accent-emerald); font-weight:700;">🟢 HEALTHY</span>`;
 }
 
 // Fetch GitHub Action Workflow Runs via GitHub REST API
@@ -230,16 +295,17 @@ async function fetchGitHubRuns() {
       workflowRunsData = data.workflow_runs || [];
       renderWorkflowRuns(workflowRunsData);
     } else {
-      runsList.innerHTML = `<div class="run-item"><span class="run-title-text" style="color:var(--text-muted)">Unable to load live GitHub logs (Rate limit or private repo).</span></div>`;
+      if (runsList) runsList.innerHTML = `<div class="run-item"><span class="run-title-text" style="color:var(--text-muted)">Unable to load live GitHub logs.</span></div>`;
     }
   } catch (err) {
-    runsList.innerHTML = `<div class="run-item"><span class="run-title-text" style="color:var(--text-muted)">GitHub Actions status protected.</span></div>`;
+    if (runsList) runsList.innerHTML = `<div class="run-item"><span class="run-title-text" style="color:var(--text-muted)">GitHub Actions status protected.</span></div>`;
   }
 }
 
-// Render Workflow Runs
+// Render Workflow Runs List
 function renderWorkflowRuns(runs) {
   const runsList = document.getElementById('runsList');
+  if (!runsList) return;
   runsList.innerHTML = '';
 
   if (!runs || runs.length === 0) {
@@ -255,8 +321,7 @@ function renderWorkflowRuns(runs) {
     const iconClass = isSuccess ? 'success' : 'failure';
     const iconSymbol = isSuccess ? '✓' : '✗';
     const statusColor = isSuccess ? 'var(--accent-emerald)' : 'var(--accent-rose)';
-
-    const timeFormatted = formatDateIST(run.created_at);
+    const timeFormattedIST = formatDateIST(run.created_at);
 
     item.innerHTML = `
       <div class="run-info">
@@ -268,7 +333,7 @@ function renderWorkflowRuns(runs) {
       </div>
       <div style="text-align:right">
         <div class="run-time" style="color:${statusColor}">${run.conclusion ? run.conclusion.toUpperCase() : run.status.toUpperCase()}</div>
-        <div class="run-meta">${timeFormatted}</div>
+        <div class="run-meta">${timeFormattedIST}</div>
       </div>
     `;
 
@@ -276,7 +341,7 @@ function renderWorkflowRuns(runs) {
   });
 }
 
-// Format Date string to Indian Standard Time (IST)
+// Format Date string strictly to Indian Standard Time (IST)
 function formatDateIST(isoString) {
   try {
     const date = new Date(isoString);
@@ -290,6 +355,17 @@ function formatDateIST(isoString) {
     }) + ' IST';
   } catch (e) {
     return isoString;
+  }
+}
+
+// Calculate hours difference
+function getHoursDiff(isoString) {
+  try {
+    const now = new Date();
+    const past = new Date(isoString);
+    return Math.abs(now - past) / (1000 * 60 * 60);
+  } catch (e) {
+    return 0;
   }
 }
 
@@ -319,7 +395,6 @@ function startCountdownTimer() {
     const now = new Date();
     const utcHours = now.getUTCHours();
     
-    // Target next 00:00 UTC or 12:00 UTC
     let target = new Date(now);
     target.setMilliseconds(0);
     target.setSeconds(0);

@@ -27,6 +27,11 @@
         </div>
       </div>
       <div class="header-actions">
+        <select id="autoSyncSelect" class="select-control" title="Auto-Sync Interval">
+          <option value="0">⚡ Auto-Sync: Off</option>
+          <option value="30">🔄 Auto-Sync: 30s</option>
+          <option value="60">🔄 Auto-Sync: 60s</option>
+        </select>
         <button id="refreshBtn" class="btn btn-secondary">🔄 Sync Status</button>
         <a href="https://github.com/ArthaSol/supabase-keepalive-central/actions/workflows/keepalive-all.yml" target="_blank" class="btn btn-primary">🚀 Trigger Keep-Alive</a>
       </div>
@@ -38,7 +43,7 @@
         <div class="pulse-dot"></div>
         <div>
           <div class="status-title">All Systems Operational</div>
-          <div class="status-sub">6 Free-Tier Supabase Databases Active & Protected</div>
+          <div class="status-sub">6 Free-Tier Supabase Databases Active & Protected (IST Timestamps)</div>
         </div>
       </div>
 
@@ -58,11 +63,19 @@
       </div>
     </section>
 
-    <!-- Account Email Filter Tabs -->
-    <div class="filter-tabs">
-      <button class="filter-btn active" data-filter="all">All Accounts (6)</button>
-      <button class="filter-btn" data-filter="bhargav.madhun1@gmail.com">bhargav.madhun1@gmail.com (4)</button>
-      <button class="filter-btn" data-filter="mbhargava.c@gmail.com">mbhargava.c@gmail.com (2)</button>
+    <!-- Controls & Search Bar -->
+    <div class="controls-bar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by app name, package (com.*), or subdomain ref...">
+      </div>
+
+      <!-- Account Email Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-filter="all">All Accounts (6)</button>
+        <button class="filter-btn" data-filter="bhargav.madhun1@gmail.com">bhargav.madhun1@gmail.com (4)</button>
+        <button class="filter-btn" data-filter="mbhargava.c@gmail.com">mbhargava.c@gmail.com (2)</button>
+      </div>
     </div>
 
     <!-- Projects Grid Container -->
@@ -73,7 +86,7 @@
     <!-- GitHub Actions Workflow Runs Activity Stream -->
     <section class="workflow-section">
       <div class="section-title">
-        <span>⚡ Recent GitHub Actions Execution Stream</span>
+        <span>⚡ Recent GitHub Actions Execution Stream (IST)</span>
         <a href="https://github.com/ArthaSol/supabase-keepalive-central/actions" target="_blank" class="btn btn-secondary" style="font-size:0.75rem; padding:0.35rem 0.75rem;">View All Runs ↗</a>
       </div>
       <div class="runs-list" id="runsList">
@@ -86,7 +99,7 @@
     <!-- Footer -->
     <footer class="footer">
       <p>Centralized Database Protection System • Powered by GitHub Actions & REST Heartbeat API</p>
-      <p style="margin-top:0.35rem;"><a href="https://github.com/ArthaSol/supabase-keepalive-central" target="_blank">ArthaSol/supabase-keepalive-central Repository</a></p>
+      <p style="margin-top:0.35rem;"><a href="https://github.com/ArthaSol/supabase-keepalive-central" target="_blank">ArthaSol/supabase-keepalive-central Repository</a> • <a href="PROJECT_MAP.md" target="_blank">Project Map Reference</a></p>
     </footer>
 
   </div>
