@@ -15,7 +15,7 @@ const PROJECTS = [
     repo: 'ArthaSol/supabase-keepalive-central',
     note: 'Central Host DB & Temple App',
     secret: 'PWGEPPFXGXDPGZFOULFN_SERVICE_ROLE',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3Z2VwcGZ4Z3hkcGd6Zm91bGZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3MjEyNzUsImV4cCI6MjA4NzI5NzI3NX0.pzV5TE7_FHMojQDulCnyN40ig2DBKzCaENubdzXKlUs'
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3Z2VwcGZ4Z3hkcGd6Zm91bGZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE3MjEyNzUsImV4cCI6MjA8NzI5NzI3NX0.pzV5TE7_FHMojQDulCnyN40ig2DBKzCaENubdzXKlUs'
   },
   {
     id: 'audmwkalkloomrltijop',
@@ -266,12 +266,15 @@ async function checkProjectPingStatus(project) {
     }
   }
 
-  // 2. Fallback to latest GitHub Actions workflow run timestamp
+  // 2. Fallback to latest keepalive workflow run timestamp (strictly keepalive-all.yml)
   if (workflowRunsData.length > 0) {
-    const latestSuccess = workflowRunsData.find(r => r.conclusion === 'success');
-    if (latestSuccess) {
-      const formattedIST = formatDateIST(latestSuccess.updated_at);
-      const relativeAge = getRelativeTime(latestSuccess.updated_at);
+    const latestKeepAliveSuccess = workflowRunsData.find(r => 
+      r.conclusion === 'success' && 
+      (r.name === 'Centralized Supabase Keep Alive' || (r.path && r.path.includes('keepalive-all')))
+    );
+    if (latestKeepAliveSuccess) {
+      const formattedIST = formatDateIST(latestKeepAliveSuccess.updated_at);
+      const relativeAge = getRelativeTime(latestKeepAliveSuccess.updated_at);
       timeElem.innerText = `${formattedIST} (${relativeAge})`;
       statusElem.innerHTML = `<span style="color:var(--accent-emerald); font-weight:700;">🟢 HEALTHY</span>`;
       if (latencyElem) {
@@ -290,7 +293,7 @@ async function checkProjectPingStatus(project) {
 async function fetchGitHubRuns() {
   const runsList = document.getElementById('runsList');
   try {
-    const response = await fetch('https://api.github.com/repos/ArthaSol/supabase-keepalive-central/actions/runs?per_page=5');
+    const response = await fetch('https://api.github.com/repos/ArthaSol/supabase-keepalive-central/actions/runs?per_page=10');
     if (response.ok) {
       const data = await response.json();
       workflowRunsData = data.workflow_runs || [];
@@ -303,18 +306,24 @@ async function fetchGitHubRuns() {
   }
 }
 
-// Render Workflow Runs List
+// Render Workflow Runs List (Filters for keepalive-all workflow)
 function renderWorkflowRuns(runs) {
   const runsList = document.getElementById('runsList');
   if (!runsList) return;
   runsList.innerHTML = '';
 
-  if (!runs || runs.length === 0) {
+  const keepAliveRuns = runs.filter(r => 
+    r.name === 'Centralized Supabase Keep Alive' || (r.path && r.path.includes('keepalive-all'))
+  );
+
+  const displayList = keepAliveRuns.length > 0 ? keepAliveRuns.slice(0, 5) : runs.slice(0, 5);
+
+  if (displayList.length === 0) {
     runsList.innerHTML = `<div class="run-item"><span class="run-title-text">No recent runs found.</span></div>`;
     return;
   }
 
-  runs.forEach(run => {
+  displayList.forEach(run => {
     const item = document.createElement('div');
     item.className = 'run-item';
     
